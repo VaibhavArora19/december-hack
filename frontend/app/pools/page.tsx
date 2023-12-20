@@ -1,5 +1,5 @@
-import Header from "@/components/pools/Header";
-import List from "@/components/pools/List";
+import Header from "@/components/Pool/Header";
+import List from "@/components/Pool/List";
 
 const Pools = () => {
   return (

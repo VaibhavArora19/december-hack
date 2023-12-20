@@ -1,9 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { TPoolInfo } from "@/types/PoolInfo";
+import { useRouter } from "next/navigation";
 
 const Pool = ({ poolInfo }: { poolInfo: TPoolInfo }) => {
+  const router = useRouter();
+
   return (
-    <div className="w-[50%] rounded-md bg-gray-900">
+    <div
+      className="w-[50%] rounded-md bg-gray-900 cursor-pointer"
+      onClick={() => {
+        router.push(`/pools/${poolInfo.address}`);
+      }}
+    >
       <div className="mb-4 ml-4 mt-2">
         <Image
           src={poolInfo.icon}
