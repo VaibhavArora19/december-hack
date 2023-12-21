@@ -10,8 +10,8 @@ const InfoComp = (props: IProp) => {
         <h3>{props.token}</h3>
       </div>
       <div>
-        <h3>
-          {props.value.length > 10
+        <h3 className="font-semibold">
+          {props.value.includes("0x") && props.value.length > 10
             ? props.value.substring(0, 5) +
               "..." +
               props.value.substring(38, 43)

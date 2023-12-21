@@ -3,6 +3,10 @@ const nextConfig = {
   images: {
     domains: ["app.superfluid.finance"],
   },
+  webpack: (config) => {
+    config.externals.push("pino-pretty", "lokijs", "encoding");
+    return config;
+  },
 };
 
 module.exports = nextConfig;
