@@ -2,10 +2,11 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import "@opezeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Sequencer is Ownable {
     using SuperTokenV1Library for ISuperToken;
@@ -54,7 +55,7 @@ contract Sequencer is Ownable {
     ) external view returns (Pool memory) {
         for (uint i = 0; i < pools.length; i++) {
             if (pools[i].poolAddress == _pool) {
-                return pools;
+                return pools[i];
             }
         }
     }
@@ -101,16 +102,50 @@ contract Sequencer is Ownable {
             int96 flowRate,
             uint256 deposit,
             uint256 owedDeposit
-        ) = ISuperToken(_superToken).getFlowInfo(
-                _superToken,
-                _sender,
-                address(this)
-            );
+        ) = ISuperToken(_superToken).getFlowInfo(_sender, address(this));
 
-        uint256 amountToDowngrade = flowRate * 86400;
+        uint256 amountToDowngrade = uint256(uint96(flowRate * 86400));
 
-        ISuperToken(_superToken).downgradeToken(amountToDowngrade);
+        ISuperToken(_superToken).downgrade(amountToDowngrade);
 
         return amountToDowngrade;
+    }
+
+    function depositToPool(
+        address _poolAddress,
+        address _depositToken,
+        address _sender,
+        uint256 _amount
+    ) internal {
+        IERC20(_depositToken).approve(_sender, _amount);
+        (bool success, bytes memory data) = _poolAddress.call{value: 0}(
+            abi.encodeWithSignature(
+                "deposit(uint256, address)",
+                _amount,
+                _sender
+            )
+        );
+
+        require(success, "Function call failed");
+    }
+
+    function depositToPoolForAll() external {
+        for (uint i = 0; i < pools.length; i++) {
+            address[] memory depositors = depositorInPool[pools[i].poolAddress];
+
+            for (uint j = 0; j < depositors.length; j++) {
+                uint downgradedAmount = downgradeToken(
+                    depositors[j],
+                    pools[i].superToken
+                );
+
+                depositToPool(
+                    pools[i].poolAddress,
+                    pools[i].superToken,
+                    depositors[j],
+                    downgradedAmount
+                );
+            }
+        }
     }
 }
