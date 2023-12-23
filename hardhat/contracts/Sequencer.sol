@@ -134,6 +134,10 @@ contract Sequencer is Ownable {
             address[] memory depositors = depositorInPool[pools[i].poolAddress];
 
             for (uint j = 0; j < depositors.length; j++) {
+                if (depositors[j] == address(0)) {
+                    continue;
+                }
+
                 uint downgradedAmount = downgradeToken(
                     depositors[j],
                     pools[i].superToken
@@ -145,6 +149,15 @@ contract Sequencer is Ownable {
                     depositors[j],
                     downgradedAmount
                 );
+            }
+        }
+    }
+
+    function removeDepositor(address _sender, address _pool) external {
+        for (uint i = 0; i < depositorInPool[_pool].length; i++) {
+            if (depositorInPool[_pool][i] == _sender) {
+                require(_sender == msg.sender, "You are not the depositor");
+                depositorInPool[_pool][i] = address(0);
             }
         }
     }
