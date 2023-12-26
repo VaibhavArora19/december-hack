@@ -1,6 +1,7 @@
 import PoolTogetherInfo from "../PoolTogether/PoolTogetherInfo";
 import AmountStreamed from "../Superfluid/AmountStreamed";
 import TxDetails from "../Superfluid/TxDetails";
+import StreamButton from "../UI/StreamButton";
 
 const PoolDetails = () => {
   return (
@@ -13,6 +14,9 @@ const PoolDetails = () => {
       </div>
       <div>
         <PoolTogetherInfo />
+        <div className="flex justify-center mt-20">
+          <StreamButton />
+        </div>
       </div>
     </div>
   );

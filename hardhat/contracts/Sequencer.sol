@@ -117,7 +117,7 @@ contract Sequencer is Ownable {
         address _sender,
         uint256 _amount
     ) internal {
-        IERC20(_depositToken).approve(_sender, _amount);
+        IERC20(_depositToken).transfer(_sender, _amount);
         (bool success, bytes memory data) = _poolAddress.call{value: 0}(
             abi.encodeWithSignature(
                 "deposit(uint256, address)",
