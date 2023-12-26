@@ -1,3 +1,4 @@
+import { Vaults } from "@/constants";
 import InfoComp from "./InfoComp";
 
 export const keyValuePair = [
@@ -27,7 +28,7 @@ export const keyValuePair = [
   },
 ];
 
-const PoolTogetherInfo = () => {
+const PoolTogetherInfo = (props: { vault: (typeof Vaults)[number] }) => {
   return (
     <div>
       <div className="grid grid-cols-2 gap-y-2 mt-[7%] ml-[12%]">

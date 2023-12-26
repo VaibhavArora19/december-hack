@@ -1,3 +1,5 @@
+export const smartContractAddress = "0xas";
+
 export const Vaults = [
   {
     chainId: 420,
