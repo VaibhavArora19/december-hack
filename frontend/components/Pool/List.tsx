@@ -23,9 +23,9 @@ const PoolList = [
 
 const List = () => {
   return (
-    <div className="mt-40 mx-[5%] mb-10 grid grid-cols-3 place-content-center">
+    <div className="mt-40 ml-[6%] mb-10 grid grid-cols-3 place-content-center">
       {Vaults.map((pool, index) => (
-        <div key={index} className="mt-6">
+        <div key={index} className="mt-10">
           <Pool poolInfo={pool} />
         </div>
       ))}

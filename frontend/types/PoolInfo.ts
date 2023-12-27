@@ -5,6 +5,7 @@ export type TPoolInfo = {
   decimals: number;
   symbol: string;
   logoURI: string;
+  superToken: string;
   extensions: {
     underlyingAsset: {
       address: string;

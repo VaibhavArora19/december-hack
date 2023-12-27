@@ -25,6 +25,8 @@ contract Sequencer is Ownable {
     //mark address as address(0) if stream is stopped
     mapping(address => address[]) public depositorInPool;
 
+    mapping(address => address[]) public poolsOfDepositor;
+
     //mapping to check if pool exist or not
     mapping(address => bool) public isPoolExist;
 
@@ -80,6 +82,7 @@ contract Sequencer is Ownable {
         }
 
         depositorInPool[_poolAddress].push(_depositor);
+        poolsOfDepositor[_depositor].push(_poolAddress);
     }
 
     //downgrades the super token to erc20 underlying token and total amount downgraded is token streamed in 1 days
@@ -144,11 +147,23 @@ contract Sequencer is Ownable {
     }
 
     function removeDepositor(address _sender, address _pool) external {
+        require(_sender == msg.sender, "You are not the depositor");
         for (uint i = 0; i < depositorInPool[_pool].length; i++) {
             if (depositorInPool[_pool][i] == _sender) {
-                require(_sender == msg.sender, "You are not the depositor");
                 depositorInPool[_pool][i] = address(0);
             }
         }
+
+        for (uint i = 0; i < poolsOfDepositor[_sender].length; i++) {
+            if (poolsOfDepositor[_sender][i] == _pool) {
+                poolsOfDepositor[_sender][i] = address(0);
+            }
+        }
+    }
+
+    function getDepositorPool(
+        address _sender
+    ) external view returns (address[] memory) {
+        return poolsOfDepositor[_sender];
     }
 }
