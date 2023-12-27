@@ -15,7 +15,6 @@ contract Sequencer is Ownable {
     struct Pool {
         address poolAddress;
         address depositToken;
-        address prizeToken;
         address superToken;
     }
 
@@ -32,18 +31,10 @@ contract Sequencer is Ownable {
     constructor(
         address[] memory _poolAddress,
         address[] memory _depositToken,
-        address[] memory _prizeToken,
         address[] memory _superToken
     ) {
         for (uint i = 0; i < _poolAddress.length; i++) {
-            pools.push(
-                Pool(
-                    _poolAddress[i],
-                    _depositToken[i],
-                    _prizeToken[i],
-                    _superToken[i]
-                )
-            );
+            pools.push(Pool(_poolAddress[i], _depositToken[i], _superToken[i]));
 
             isPoolExist[_poolAddress[i]] = true;
         }
@@ -69,10 +60,9 @@ contract Sequencer is Ownable {
     function addPool(
         address _poolAddress,
         address _depositToken,
-        address _prizeToken,
         address _superToken
     ) external onlyOwner {
-        pools.push(Pool(_poolAddress, _depositToken, _prizeToken, _superToken));
+        pools.push(Pool(_poolAddress, _depositToken, _superToken));
         isPoolExist[_poolAddress] = true;
     }
 
@@ -104,7 +94,7 @@ contract Sequencer is Ownable {
             uint256 owedDeposit
         ) = ISuperToken(_superToken).getFlowInfo(_sender, address(this));
 
-        uint256 amountToDowngrade = uint256(uint96(flowRate * 86400));
+        uint256 amountToDowngrade = uint256(uint96(flowRate * 86000));
 
         ISuperToken(_superToken).downgrade(amountToDowngrade);
 

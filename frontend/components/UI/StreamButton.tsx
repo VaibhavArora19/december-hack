@@ -24,6 +24,8 @@ const StreamButton = (props: { vault: (typeof Vaults)[number] }) => {
     [onPaymentOptionUpdate]
   );
 
+  //!when user sends a transaction need to add the depositor to smart contract
+
   return (
     <>
       <ConnectButton.Custom>
@@ -38,8 +40,8 @@ const StreamButton = (props: { vault: (typeof Vaults)[number] }) => {
                 productDetails={productDetails}
                 paymentDetails={paymentDetails(
                   smartContractAddress,
-                  "0xasd",
-                  "1"
+                  "0xasd", //! need to change this later
+                  "1" //! need to change this later
                 )}
                 type="dialog"
                 walletManager={walletManager}

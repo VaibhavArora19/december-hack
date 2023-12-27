@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Pool from "./Pool";
+import { Vaults } from "@/constants";
 
 const PoolList = [
   {
-    icon: "/DAI-OP.jpg",
+    icon: "/background.png",
     name: "Prize DAI-LY",
     network: "Optimism",
     address: "0x1",
@@ -11,7 +12,7 @@ const PoolList = [
     prizeToken: "0x3",
   },
   {
-    icon: "/WETH-OP.jpg",
+    icon: "/background.png",
     name: "Prize WETH-PWETH",
     network: "Optimism",
     address: "0x1",
@@ -22,9 +23,9 @@ const PoolList = [
 
 const List = () => {
   return (
-    <div className="mt-40 ml-[18%] mb-10 grid grid-cols-3 place-content-center">
-      {PoolList.map((pool, index) => (
-        <div key={index}>
+    <div className="mt-40 mx-[5%] mb-10 grid grid-cols-3 place-content-center">
+      {Vaults.map((pool, index) => (
+        <div key={index} className="mt-6">
           <Pool poolInfo={pool} />
         </div>
       ))}

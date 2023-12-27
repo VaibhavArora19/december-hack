@@ -1,8 +1,15 @@
 export type TPoolInfo = {
-  name: string;
-  icon: string;
-  network: string;
+  chainId: number;
   address: string;
-  depositedToken: string;
-  prizeToken: string;
+  name: string;
+  decimals: number;
+  symbol: string;
+  logoURI: string;
+  extensions: {
+    underlyingAsset: {
+      address: string;
+      symbol: string;
+      name: string;
+    };
+  };
 };

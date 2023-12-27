@@ -1,18 +1,44 @@
 "use client";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useRouter } from "next/navigation";
+
 const Navbar = () => {
+  const router = useRouter();
+
   return (
     <div className="flex justify-between mx-12">
       <div>
-        <h1>SF.</h1>
+        <h1
+          className="cursor-pointer text-[2rem] font-medium"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          SF.
+        </h1>
       </div>
       <div className="flex justify-around gap-6">
-        <div className="flex justify-around gap-6">
-          <h3>Pools</h3>
-          <h3>Activity</h3>
+        <div className="flex justify-around gap-6 mt-4">
+          <h3
+            className="cursor-pointer text-[1.15rem] font-medium"
+            onClick={() => {
+              router.push("/pools");
+            }}
+          >
+            Pools
+          </h3>
+          <h3
+            className="cursor-pointer text-[1.15rem] font-medium"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Activity
+          </h3>
         </div>
-        <div>
-          <w3m-button />
+        <div className="mt-[0.8rem]">
+          <ConnectButton />
         </div>
       </div>
     </div>
