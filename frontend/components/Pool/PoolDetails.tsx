@@ -21,12 +21,9 @@ const PoolDetails = () => {
   let id: string[] | string = pathname.split("/");
   id = id[id.length - 1];
 
-  console.log("id is", id);
   const [currentVault] = Vaults.filter((vault) => {
     return vault.address === id;
   });
-
-  console.log("current", currentVault);
 
   /**
    * * gets the user allowance and gets the flowrate of user to the contract
@@ -46,6 +43,7 @@ const PoolDetails = () => {
       currentVault.address
     );
 
+    console.log("aa", allowanceByUser.toString());
     setAllowance(allowanceByUser.toString());
   };
 
@@ -67,7 +65,12 @@ const PoolDetails = () => {
         signer
       );
 
-      await contract.approve(currentVault.address, "100000000000000000000000");
+      const tx = await contract.approve(
+        currentVault.address,
+        "100000000000000000000000"
+      );
+
+      await tx.wait();
 
       setLoading(false);
     } catch (error) {

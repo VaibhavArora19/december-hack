@@ -1,5 +1,5 @@
 export const smartContractAddress =
-  "0x75Ce802c479A31aAa88Cb0BDE13853128055586A";
+  "0xf1d0DF4BBAAA0B70AbBbE672f6C30fF8b1De2541";
 
 export const ERC20ABI = [
   {
@@ -231,7 +231,7 @@ export const Vaults = [
     name: "Prize DAI - LY",
     decimals: 18,
     symbol: "PDAI-LY",
-    superToken: "0x5883d51A8b4bC48252ae3Ce7EDD9B62903e40E13",
+    superToken: "0xaC7A5cf2E0A6DB31456572871Ee33eb6212014a9",
     logoURI:
       "https://assets.coingecko.com/coins/images/9956/small/4943.png?1636636734",
     extensions: {
@@ -248,7 +248,7 @@ export const Vaults = [
     name: "Prize DAI - HY",
     decimals: 18,
     symbol: "PDAI-HY",
-    superToken: "0x5883d51A8b4bC48252ae3Ce7EDD9B62903e40E13",
+    superToken: "0xaC7A5cf2E0A6DB31456572871Ee33eb6212014a9",
     logoURI:
       "https://assets.coingecko.com/coins/images/9956/small/4943.png?1636636734",
     extensions: {
@@ -263,7 +263,7 @@ export const Vaults = [
     chainId: 420,
     address: "0x1eAdB947b1e66ff3575F9Fd0FD4fB4Cc8fcAD8Fd",
     name: "Prize USDC - LY",
-    superToken: "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
+    superToken: "0x0A14509Ce30137C3d648d446997752144478983C",
     decimals: 6,
     symbol: "PUSDC-LY",
     logoURI: "https://etherscan.io/token/images/centre-usdc_28.png",
@@ -281,7 +281,7 @@ export const Vaults = [
     name: "Prize USDC - HY",
     decimals: 6,
     symbol: "PUSDC-HY",
-    superToken: "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
+    superToken: "0x0A14509Ce30137C3d648d446997752144478983C",
 
     logoURI: "https://etherscan.io/token/images/centre-usdc_28.png",
     extensions: {
@@ -296,7 +296,7 @@ export const Vaults = [
     chainId: 420,
     address: "0xa2574ee88D049Df4CdC8DEc746842C7615FBF5A5",
     name: "Prize WBTC",
-    superToken: "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
+    superToken: "0xC993aCC8C7B50d1560bA738F46d2284971bBA17E",
 
     decimals: 8,
     symbol: "PWBTC",
@@ -313,7 +313,7 @@ export const Vaults = [
     chainId: 420,
     address: "0xb1AF8E57033a0f5B5Db37C2B2E8C4a357514d2B5",
     name: "Prize GUSD",
-    superToken: "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
+    superToken: "0xC993aCC8C7B50d1560bA738F46d2284971bBA17E",
 
     decimals: 2,
     symbol: "PGUSD",

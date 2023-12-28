@@ -40,8 +40,8 @@ const StreamButton = (props: { vault: (typeof Vaults)[number] }) => {
                 productDetails={productDetails}
                 paymentDetails={paymentDetails(
                   smartContractAddress,
-                  "0xasd", //! need to change this later
-                  "1" //! need to change this later
+                  props.vault.superToken as any,
+                  "100" //! need to change this later
                 )}
                 type="dialog"
                 walletManager={walletManager}

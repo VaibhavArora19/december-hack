@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { createClient, cacheExchange, fetchExchange } from "urql";
 import { streamSendQuery } from "@/queries";
 import { useAccount } from "wagmi";
+import { smartContractAddress } from "@/constants";
 
 const Activity = () => {
   const { address } = useAccount();
@@ -16,7 +17,10 @@ const Activity = () => {
     });
 
     const data = await client
-      .query(streamSendQuery, { sender: address })
+      .query(streamSendQuery, {
+        sender: address,
+        receiver: smartContractAddress,
+      })
       .toPromise();
 
     console.log("data is", data);

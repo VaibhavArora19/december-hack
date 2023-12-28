@@ -22,10 +22,10 @@ async function main() {
   ];
 
   const superToken = [
-    "0x5883d51A8b4bC48252ae3Ce7EDD9B62903e40E13",
-    "0x5883d51A8b4bC48252ae3Ce7EDD9B62903e40E13",
-    "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
-    "0xC169ADfdD6dbCFfb80DffAF2FCaAB9bF4820AF18",
+    "0xaC7A5cf2E0A6DB31456572871Ee33eb6212014a9",
+    "0xaC7A5cf2E0A6DB31456572871Ee33eb6212014a9",
+    "0x0A14509Ce30137C3d648d446997752144478983C",
+    "0x0A14509Ce30137C3d648d446997752144478983C",
   ];
 
   const lock = await hre.ethers.deployContract("Sequencer", [
@@ -46,4 +46,4 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
-// 0x75Ce802c479A31aAa88Cb0BDE13853128055586A
+// 0xf1d0DF4BBAAA0B70AbBbE672f6C30fF8b1De2541
