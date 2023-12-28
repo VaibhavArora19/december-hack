@@ -31,7 +31,7 @@ const Navbar = () => {
           <h3
             className="cursor-pointer text-[1.15rem] font-medium"
             onClick={() => {
-              router.push("/");
+              router.push("/activity");
             }}
           >
             Activity

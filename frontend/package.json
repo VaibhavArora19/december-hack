@@ -16,9 +16,11 @@
     "@web3modal/ethers5": "^3.5.1",
     "@web3modal/wagmi": "3.3.2",
     "ethers": "^5.7.2",
+    "graphql": "^16.8.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "urql": "^4.0.6",
     "viem": "^1.21.0",
     "wagmi": "^1.4.12"
   },

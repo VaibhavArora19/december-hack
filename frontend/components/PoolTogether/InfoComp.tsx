@@ -11,7 +11,7 @@ const InfoComp = (props: IProp) => {
       </div>
       <div>
         <h3 className="font-semibold">
-          {props.value.includes("0x") && props.value.length > 10
+          {props.value.includes("0x") && props.value?.length > 10
             ? props.value.substring(0, 5) +
               "..." +
               props.value.substring(38, 43)

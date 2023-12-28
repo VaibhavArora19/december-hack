@@ -29,13 +29,40 @@ export const keyValuePair = [
 ];
 
 const PoolTogetherInfo = (props: { vault: (typeof Vaults)[number] }) => {
+  const formattedVaultInfo = [
+    {
+      token: "Your balance",
+      value: "120012", //!the amount user deposited in pool together edit later
+    },
+    {
+      token: "Your win chance",
+      value: "7.5%", //!check if we can get the value of this from somewhere
+    },
+    {
+      token: "Deposit Token",
+      value: props.vault.extensions.underlyingAsset.address,
+    },
+    {
+      token: "Flow Rate",
+      value: "0.111 fDAIx/hour", //!need to send with the token name
+    },
+    {
+      token: "TVL",
+      value: "100 DAI", //!need to edit this as well
+    },
+    {
+      token: "Super Token",
+      value: props.vault.superToken,
+    },
+  ];
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-y-2 mt-[7%] ml-[12%]">
-        {keyValuePair.map((singleVal: any) => {
+        {formattedVaultInfo.map((singleVal: any) => {
           return (
             <InfoComp
-              key={singleVal.key}
+              key={singleVal.token}
               token={singleVal.token}
               value={singleVal.value}
             />
