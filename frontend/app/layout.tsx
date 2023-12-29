@@ -2,6 +2,7 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
 
+import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: any }) {
             {children}
           </RainbowKitProvider>
         </WagmiConfig>
+        <Footer />
       </body>
     </html>
   );
