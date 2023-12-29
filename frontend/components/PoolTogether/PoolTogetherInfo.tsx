@@ -1,5 +1,6 @@
 import { Vaults } from "@/constants";
 import InfoComp from "./InfoComp";
+import { ethers } from "ethers";
 
 export const keyValuePair = [
   {
@@ -28,15 +29,18 @@ export const keyValuePair = [
   },
 ];
 
-const PoolTogetherInfo = (props: { vault: (typeof Vaults)[number] }) => {
+const PoolTogetherInfo = (props: {
+  vault: (typeof Vaults)[number];
+  flowData: any;
+}) => {
   const formattedVaultInfo = [
     {
       token: "Your balance",
       value: "120012", //!the amount user deposited in pool together edit later
     },
     {
-      token: "Your win chance",
-      value: "7.5%", //!check if we can get the value of this from somewhere
+      token: "Pool Address",
+      value: props.vault.address, //!check if we can get the value of this from somewhere
     },
     {
       token: "Deposit Token",
@@ -44,7 +48,7 @@ const PoolTogetherInfo = (props: { vault: (typeof Vaults)[number] }) => {
     },
     {
       token: "Flow Rate",
-      value: "0.111 fDAIx/hour", //!need to send with the token name
+      value: ethers.utils.formatEther(props.flowData?.flowRate) + " fDAIx/sec", //!need to send with the token name
     },
     {
       token: "TVL",
