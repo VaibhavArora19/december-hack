@@ -19,12 +19,13 @@ const ActivityRow = (props: any) => {
       provider
     );
 
-    const getPools = await contract.getPools();
+    const getPools = await contract.getAllDepositsByDepositor(address);
 
     console.log("abc", getPools);
     const [poolInfo] = getPools.filter((pool: any) => {
       return (
-        pool.superToken.toLowerCase() === props.stream.token.id.toLowerCase()
+        pool.superTokenAddress.toLowerCase() ===
+        props.stream.token.id.toLowerCase()
       );
     });
 

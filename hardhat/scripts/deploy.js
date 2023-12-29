@@ -28,11 +28,7 @@ async function main() {
     "0x0A14509Ce30137C3d648d446997752144478983C",
   ];
 
-  const lock = await hre.ethers.deployContract("Sequencer", [
-    poolAddress,
-    depositToken,
-    superToken,
-  ]);
+  const lock = await hre.ethers.deployContract("Sequencer");
 
   await lock.waitForDeployment();
 
@@ -46,4 +42,4 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
-// 0xf1d0DF4BBAAA0B70AbBbE672f6C30fF8b1De2541
+// 0x1894c592d195f303829470Bb8D95A4054e977528

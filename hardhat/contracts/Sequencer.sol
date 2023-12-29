@@ -8,162 +8,158 @@ import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/inte
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+// Superfluid widget doesn't work with the super tokens that are not listed
+// so we take a stream of super token convert them to their underlying address
+// lock that token in our smart contract
+// and deposit the token that is included in pool together based on 1:1 pegging of both tokens
+
 contract Sequencer is Ownable {
     using SuperTokenV1Library for ISuperToken;
 
-    //Pool Information
-    struct Pool {
+    struct Deposit {
         address poolAddress;
-        address depositToken;
-        address superToken;
+        address underlyingTokenAddress;
+        address depositor;
+        address superTokenAddress;
+        uint streamStartedAt;
+        uint tokensInvestedAt;
+        bool isOngoing;
     }
 
-    //all pools
-    Pool[] public pools;
+    Deposit[] public deposits;
 
-    //mapping of address of pool to the array of address of depositors in pool
-    //mark address as address(0) if stream is stopped
-    mapping(address => address[]) public depositorInPool;
+    mapping(address => Deposit[]) public depositByPoolAddress;
 
-    mapping(address => address[]) public poolsOfDepositor;
+    mapping(address => Deposit[]) public depositByDepositor;
 
-    //mapping to check if pool exist or not
-    mapping(address => bool) public isPoolExist;
-
-    constructor(
-        address[] memory _poolAddress,
-        address[] memory _depositToken,
-        address[] memory _superToken
-    ) {
-        for (uint i = 0; i < _poolAddress.length; i++) {
-            pools.push(Pool(_poolAddress[i], _depositToken[i], _superToken[i]));
-
-            isPoolExist[_poolAddress[i]] = true;
-        }
-    }
-
-    //getter function to get pool from pool address
-    function getPoolFromPoolAddress(
-        address _pool
-    ) external view returns (Pool memory) {
-        for (uint i = 0; i < pools.length; i++) {
-            if (pools[i].poolAddress == _pool) {
-                return pools[i];
-            }
-        }
-    }
-
-    //getter function to get all the pools
-    function getPools() external view returns (Pool[] memory) {
-        return pools;
-    }
-
-    //adds a new pool to the pools array
-    function addPool(
+    function newDeposit(
         address _poolAddress,
-        address _depositToken,
+        address _underlyingToken,
+        address _depositor,
         address _superToken
-    ) external onlyOwner {
-        pools.push(Pool(_poolAddress, _depositToken, _superToken));
-        isPoolExist[_poolAddress] = true;
+    ) external {
+        Deposit memory deposit = Deposit(
+            _poolAddress,
+            _underlyingToken,
+            _depositor,
+            _superToken,
+            block.timestamp,
+            0,
+            true
+        );
+
+        deposits.push(deposit);
+
+        depositByPoolAddress[_poolAddress].push(deposit);
+        depositByDepositor[_depositor].push(deposit);
     }
 
-    //adds a depositor to the specific pool
-    function addDepositor(
-        address _depositor,
-        address _poolAddress
-    ) external onlyOwner {
-        require(isPoolExist[_poolAddress], "Pool does not exist");
+    function getAllDepositsByDepositor(
+        address _depositor
+    ) external view returns (Deposit[] memory) {
+        return depositByDepositor[_depositor];
+    }
 
-        for (uint i = 0; i < depositorInPool[_poolAddress].length; i++) {
-            if (depositorInPool[_poolAddress][i] == _depositor) {
-                revert("User already exist in pool");
+    function getAllDepositByPoolAddress(
+        address _pool
+    ) external view returns (Deposit[] memory) {
+        return depositByPoolAddress[_pool];
+    }
+
+    function stopDepositing(address _pool, address _depositor) external {
+        require(msg.sender == _depositor, "You are not depositor");
+
+        for (uint i = 0; i < deposits.length; i++) {
+            if (
+                deposits[i].poolAddress == _pool &&
+                deposits[i].depositor == _depositor
+            ) {
+                deposits[i].isOngoing = false;
+                depositByPoolAddress[_pool][i].isOngoing = false;
+                depositByDepositor[_depositor][i].isOngoing = false;
             }
         }
-
-        depositorInPool[_poolAddress].push(_depositor);
-        poolsOfDepositor[_depositor].push(_poolAddress);
     }
 
-    //downgrades the super token to erc20 underlying token and total amount downgraded is token streamed in 1 days
-    function downgradeToken(
-        address _sender,
-        address _superToken
-    ) internal returns (uint256) {
+    function getSpecificDeposit(
+        address _pool,
+        address _depositor
+    ) external view returns (Deposit memory) {
+        for (uint i = 0; i < deposits.length; i++) {
+            if (
+                deposits[i].poolAddress == _pool &&
+                deposits[i].depositor == _depositor
+            ) {
+                return deposits[i];
+            }
+        }
+    }
+
+    /**
+     * * downgrades the currently deposited tokens
+     */
+    function downgradeToken(uint _index) internal returns (uint) {
+        Deposit memory depositDetails = deposits[_index];
+
         (
             uint256 lastUpdated,
             int96 flowRate,
             uint256 deposit,
             uint256 owedDeposit
-        ) = ISuperToken(_superToken).getFlowInfo(_sender, address(this));
+        ) = ISuperToken(depositDetails.superTokenAddress).getFlowInfo(
+                depositDetails.depositor,
+                address(this)
+            );
 
-        uint256 amountToDowngrade = uint256(uint96(flowRate * 86000));
+        uint timeFromLastDeposit;
 
-        ISuperToken(_superToken).downgrade(amountToDowngrade);
+        if (depositDetails.tokensInvestedAt == 0) {
+            timeFromLastDeposit =
+                block.timestamp -
+                depositDetails.streamStartedAt; //get the total amount of tokens to downgrade
+        } else {
+            timeFromLastDeposit =
+                block.timestamp -
+                depositDetails.tokensInvestedAt;
+        }
 
-        return amountToDowngrade;
-    }
+        uint tokenToDowngrade = timeFromLastDeposit *
+            uint256(uint96(flowRate)) -
+            1000; //1000 is the buffer
 
-    function depositToPool(
-        address _poolAddress,
-        address _depositToken,
-        address _sender,
-        uint256 _amount
-    ) internal {
-        IERC20(_depositToken).transfer(_sender, _amount);
-        (bool success, bytes memory data) = _poolAddress.call{value: 0}(
-            abi.encodeWithSignature(
-                "deposit(uint256, address)",
-                _amount,
-                _sender
-            )
+        ISuperToken(depositDetails.superTokenAddress).downgrade(
+            tokenToDowngrade
         );
 
-        require(success, "Function call failed");
+        return tokenToDowngrade;
     }
 
-    function depositToPoolForAll() external {
-        for (uint i = 0; i < pools.length; i++) {
-            address[] memory depositors = depositorInPool[pools[i].poolAddress];
+    function depositAllStreamToPool() external {
+        for (uint i = 0; i < deposits.length; i++) {
+            if (deposits[i].isOngoing == true) {
+                uint tokenToDowngrade = downgradeToken(i);
 
-            for (uint j = 0; j < depositors.length; j++) {
-                if (depositors[j] == address(0)) {
-                    continue;
-                }
+                deposits[i].tokensInvestedAt = block.timestamp;
+                depositByPoolAddress[deposits[i].poolAddress][i]
+                    .tokensInvestedAt = block.timestamp;
+                depositByDepositor[deposits[i].depositor][i]
+                    .tokensInvestedAt = block.timestamp;
 
-                uint downgradedAmount = downgradeToken(
-                    depositors[j],
-                    pools[i].superToken
+                IERC20(deposits[i].underlyingTokenAddress).transfer(
+                    deposits[i].depositor,
+                    tokenToDowngrade
                 );
 
-                depositToPool(
-                    pools[i].poolAddress,
-                    pools[i].superToken,
-                    depositors[j],
-                    downgradedAmount
+                (bool success, bytes memory data) = deposits[i]
+                    .poolAddress
+                    .call{value: 0}(
+                    abi.encodeWithSignature(
+                        "deposit(uint256, address)",
+                        tokenToDowngrade,
+                        deposits[i].depositor
+                    )
                 );
             }
         }
-    }
-
-    function removeDepositor(address _sender, address _pool) external {
-        require(_sender == msg.sender, "You are not the depositor");
-        for (uint i = 0; i < depositorInPool[_pool].length; i++) {
-            if (depositorInPool[_pool][i] == _sender) {
-                depositorInPool[_pool][i] = address(0);
-            }
-        }
-
-        for (uint i = 0; i < poolsOfDepositor[_sender].length; i++) {
-            if (poolsOfDepositor[_sender][i] == _pool) {
-                poolsOfDepositor[_sender][i] = address(0);
-            }
-        }
-    }
-
-    function getDepositorPool(
-        address _sender
-    ) external view returns (address[] memory) {
-        return poolsOfDepositor[_sender];
     }
 }
