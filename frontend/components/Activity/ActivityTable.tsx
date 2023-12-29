@@ -1,6 +1,7 @@
 import ActivityRow from "./ActivityRow";
 
-const ActivityTable = () => {
+const ActivityTable = (props: any) => {
+  console.log("gg", props);
   return (
     <div className="overflow-x-auto mt-14">
       <table className="table">
@@ -12,16 +13,18 @@ const ActivityTable = () => {
                 <input type="checkbox" className="checkbox" />
               </label>
             </th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th></th>
+            <th>Sender</th>
+            <th>Pool Address</th>
+            <th>Flow Rate</th>
+            <th>Created At</th>
           </tr>
         </thead>
         <tbody>
-          <ActivityRow />
-          <ActivityRow />
-          <ActivityRow />
+          {props.streamInfo.map((stream: any) => {
+            return (
+              <ActivityRow key={stream.createdAtTimestamp} stream={stream} />
+            );
+          })}
         </tbody>
       </table>
     </div>

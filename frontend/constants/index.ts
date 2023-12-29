@@ -345,3 +345,326 @@ export const Vaults = [
     },
   },
 ];
+
+export const SMART_CONTRACT_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "_poolAddress",
+        type: "address[]",
+      },
+      {
+        internalType: "address[]",
+        name: "_depositToken",
+        type: "address[]",
+      },
+      {
+        internalType: "address[]",
+        name: "_superToken",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_depositor",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_poolAddress",
+        type: "address",
+      },
+    ],
+    name: "addDepositor",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_poolAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_depositToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_superToken",
+        type: "address",
+      },
+    ],
+    name: "addPool",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "depositToPoolForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "depositorInPool",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_sender",
+        type: "address",
+      },
+    ],
+    name: "getDepositorPool",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_pool",
+        type: "address",
+      },
+    ],
+    name: "getPoolFromPoolAddress",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "poolAddress",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "depositToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "superToken",
+            type: "address",
+          },
+        ],
+        internalType: "struct Sequencer.Pool",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPools",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "poolAddress",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "depositToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "superToken",
+            type: "address",
+          },
+        ],
+        internalType: "struct Sequencer.Pool[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "isPoolExist",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "pools",
+    outputs: [
+      {
+        internalType: "address",
+        name: "poolAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "depositToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "superToken",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "poolsOfDepositor",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_sender",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_pool",
+        type: "address",
+      },
+    ],
+    name: "removeDepositor",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];

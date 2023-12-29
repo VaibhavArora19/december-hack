@@ -15,6 +15,9 @@ const PoolDetails = () => {
   const { address } = useAccount();
   const [loading, setLoading] = useState(false);
   const [allowance, setAllowance] = useState(null);
+  const [amountDeposited, setAmountDeposited] =
+    useState<any>("0.0000000000000000");
+  const [flowData, setFlowData] = useState<any>(null);
 
   const pathname = usePathname();
 
@@ -43,6 +46,7 @@ const PoolDetails = () => {
       currentVault.address
     );
 
+    await checkStream();
     console.log("aa", allowanceByUser.toString());
     setAllowance(allowanceByUser.toString());
   };
@@ -90,7 +94,7 @@ const PoolDetails = () => {
       provider,
     });
 
-    const flowInfo = sf.cfaV1.getFlow({
+    const flowInfo = await sf.cfaV1.getFlow({
       superToken: currentVault.superToken,
       //@ts-ignore
       sender: address,
@@ -100,6 +104,8 @@ const PoolDetails = () => {
 
     //! do something with the flow info and show the button if the stream needs to be cancelled
     console.log("flow info is", flowInfo);
+    setAmountDeposited(flowInfo.deposit);
+    setFlowData(flowInfo);
   };
 
   useEffect(() => {
@@ -111,7 +117,7 @@ const PoolDetails = () => {
   return (
     <div>
       <div className="flex justify-center mt-10">
-        <AmountStreamed />
+        <AmountStreamed amountDeposited={amountDeposited} />
       </div>
       <div className="mt-[5%]">
         {address && (
@@ -123,7 +129,9 @@ const PoolDetails = () => {
         )}
       </div>
       <div>
-        <PoolTogetherInfo vault={currentVault} />
+        {flowData && (
+          <PoolTogetherInfo vault={currentVault} flowData={flowData} />
+        )}
       </div>
       <div className="mb-4">
         {allowance === null || allowance == "0" ? (
