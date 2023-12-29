@@ -13,8 +13,7 @@ const Navbar = () => {
           className="cursor-pointer text-[2rem] font-medium"
           onClick={() => {
             router.push("/");
-          }}
-        >
+          }}>
           SF.
         </h1>
       </div>
@@ -23,17 +22,22 @@ const Navbar = () => {
           <h3
             className="cursor-pointer text-[1.15rem] font-medium"
             onClick={() => {
+              router.push("/deposit");
+            }}>
+            Deposit
+          </h3>
+          <h3
+            className="cursor-pointer text-[1.15rem] font-medium"
+            onClick={() => {
               router.push("/pools");
-            }}
-          >
+            }}>
             Pools
           </h3>
           <h3
             className="cursor-pointer text-[1.15rem] font-medium"
             onClick={() => {
               router.push("/activity");
-            }}
-          >
+            }}>
             Activity
           </h3>
         </div>

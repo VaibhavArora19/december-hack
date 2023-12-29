@@ -1,21 +1,13 @@
 "use client";
-import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import "./globals.css";
 
+import Navbar from "@/components/Navbar/Navbar";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  zora,
-  optimismGoerli,
-} from "wagmi/chains";
+import { optimismGoerli } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import Navbar from "@/components/Navbar/Navbar";
 
 const { chains, publicClient } = configureChains(
   [optimismGoerli],
