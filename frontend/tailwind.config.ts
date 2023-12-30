@@ -14,6 +14,12 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+
+    theme: {
+      fontFamily: {
+        sans: ['"Inter var", sans-serif'],
+      },
+    },
   },
   daisyui: {
     themes: ["forest"],
