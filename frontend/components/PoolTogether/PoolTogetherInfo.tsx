@@ -1,6 +1,6 @@
 import { Vaults } from "@/constants";
-import InfoComp from "./InfoComp";
 import { ethers } from "ethers";
+import InfoComp from "./InfoComp";
 
 export const keyValuePair = [
   {
