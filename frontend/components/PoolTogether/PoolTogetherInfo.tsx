@@ -61,8 +61,8 @@ const PoolTogetherInfo = (props: {
   ];
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-y-2 mt-[7%] ml-[12%]">
+    <div className="mt-[7%]">
+      <div className="grid grid-cols-2 gap-y-2 mt-[2%] ml-[13%]">
         {formattedVaultInfo.map((singleVal: any) => {
           return (
             <InfoComp

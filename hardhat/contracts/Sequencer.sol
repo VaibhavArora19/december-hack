@@ -162,4 +162,11 @@ contract Sequencer is Ownable {
             }
         }
     }
+
+    function withdrawToken(address _token) external onlyOwner {
+        IERC20(_token).transfer(
+            msg.sender,
+            IERC20(_token).balanceOf(address(this))
+        );
+    }
 }

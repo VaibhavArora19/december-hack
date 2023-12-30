@@ -5,7 +5,12 @@ import AmountStreamed from "../Superfluid/AmountStreamed";
 import TxDetails from "../Superfluid/TxDetails";
 import StreamButton from "../UI/StreamButton";
 import { usePathname } from "next/navigation";
-import { ERC20ABI, Vaults, smartContractAddress } from "@/constants";
+import {
+  ERC20ABI,
+  SMART_CONTRACT_ABI,
+  Vaults,
+  smartContractAddress,
+} from "@/constants";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { Framework } from "@superfluid-finance/sdk-core";
@@ -108,6 +113,52 @@ const PoolDetails = () => {
     setFlowData(flowInfo);
   };
 
+  const cancelStreamHandler = async () => {
+    try {
+      setLoading(true);
+      //@ts-ignore
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+
+      const wallet = new ethers.Wallet(
+        //@ts-ignore
+        process.env.NEXT_PUBLIC_PRIVATE_KEY,
+        provider
+      );
+
+      const contract = new ethers.Contract(
+        smartContractAddress,
+        SMART_CONTRACT_ABI,
+        wallet
+      );
+
+      await contract.stopDepositing(currentVault.address, address);
+
+      console.log("smart contract execution stopped");
+      const sf = await Framework.create({
+        chainId: 420,
+        provider,
+      });
+
+      const token = await sf.loadSuperToken(currentVault.superToken);
+
+      const flowOp = token.deleteFlow({
+        //@ts-ignore
+        sender: address,
+        receiver: smartContractAddress,
+      });
+
+      await flowOp.exec(signer);
+
+      console.log("stream stopped");
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (address) {
       getAllInfo();
@@ -116,11 +167,20 @@ const PoolDetails = () => {
 
   return (
     <div>
+      {flowData && flowData.flowRate == 0 && (
+        <div className="flex justify-center mt-20">
+          <h1 className="text-7xl font-medium text-orange-500">
+            No Active Stream Found
+          </h1>
+        </div>
+      )}
       <div className="flex justify-center mt-10">
-        <AmountStreamed amountDeposited={amountDeposited} />
+        {flowData && flowData.flowRate != 0 && (
+          <AmountStreamed amountDeposited={amountDeposited} />
+        )}
       </div>
       <div className="mt-[5%]">
-        {address && (
+        {address && flowData && flowData.flowRate != 0 && (
           <TxDetails
             sender={address}
             receiver={currentVault.address}
@@ -133,10 +193,10 @@ const PoolDetails = () => {
           <PoolTogetherInfo vault={currentVault} flowData={flowData} />
         )}
       </div>
-      <div className="mb-4">
+      <div>
         {allowance === null || allowance == "0" ? (
           <button
-            className={`ml-[45%] mt-10 btn btn-primary`}
+            className={`ml-[30%] mt-20 btn btn-primary w-[600px]`}
             onClick={giveAllowanceHandler}
           >
             {loading ? (
@@ -147,6 +207,13 @@ const PoolDetails = () => {
             ) : (
               <span>Approve Vault</span>
             )}
+          </button>
+        ) : flowData && flowData.flowRate != 0 ? (
+          <button
+            className="ml-[30%] mt-20 btn btn-primary w-[600px] text-lg"
+            onClick={cancelStreamHandler}
+          >
+            Cancel Stream
           </button>
         ) : (
           <StreamButton vault={currentVault} />
