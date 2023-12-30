@@ -2,7 +2,7 @@ import styles from "@/app/homepage.module.css";
 import Image from "next/image";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-10">
+    <main className="flex min-h-screen flex-col items-center justify-between p-10 mt-20">
       <section>
         <div className="form-wrapper">
           <Image
@@ -35,7 +35,8 @@ export default function Home() {
 
       <div
         className="grid grid-cols-1 lg:grid-cols-3 gap-4"
-        style={{ marginTop: "10rem", width: "70vw", height: "80vh" }}>
+        style={{ marginTop: "10rem", width: "70vw", height: "80vh" }}
+      >
         <div className="flex col-span-1 min-h-[180px] lg:min-h-[320px] bg-white/5 rounded-xl lg:rounded-2xl overflow-hidden flex-col lg:items-center lg:justify-center lg:justify-between lg:flex-row-reverse px-10 py-10 lg:!py-[66px] lg:col-span-3 lg:row-span-1">
           <div className="hidden lg:block">
             <Image
@@ -43,7 +44,7 @@ export default function Home() {
               alt=""
               width={300}
               height={200}
-              style={{ marginLeft: "85px" }}
+              style={{ marginLeft: "45px" }}
             />
           </div>
           <div className="max-w-[300px] mt-6 lg:mt-0 mr-5">
@@ -80,7 +81,7 @@ export default function Home() {
           <div className="max-w-[400px] mt-6 lg:mt-0">
             <h3 className="font-semibold text-[30px] mb-3">Dynamic title</h3>
             <p className=" text-[20px]">
-              Don't be afraid to go to another page and miss the second
+              Do not be afraid to go to another page and miss the second
               transaction
             </p>
           </div>
