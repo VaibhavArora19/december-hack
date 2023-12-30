@@ -103,14 +103,9 @@ const DepositForm: React.FC = () => {
 
   return (
     <div
-<<<<<<< HEAD
-      className="  min-h-58 max-w-4xl  mx-auto bg-white/5 p-8 rounded-md shadow-md rounded-lg mt-10 "
-      style={{ height: "75vh" }}>
-=======
       className="  min-h-58 max-w-3xl  mx-auto bg-white/5 p-8 rounded-md shadow-md  mt-14"
       style={{ height: "75vh" }}
     >
->>>>>>> b99f53e8f1de2c8c4b6ffd09c528a14aaa01a77e
       <h2
         className="mb-4 block text-lg font-semibold text-gray-400"
         style={{ fontSize: "25px" }}
