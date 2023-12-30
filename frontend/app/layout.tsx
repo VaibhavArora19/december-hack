@@ -36,13 +36,15 @@ const wagmiConfig = createConfig({
 export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en">
-      <body>
-        <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
-            <Navbar />
-            {children}
-          </RainbowKitProvider>
-        </WagmiConfig>
+      <body className="flex flex-col min-h-screen">
+        <div className="flex-grow">
+          <WagmiConfig config={wagmiConfig}>
+            <RainbowKitProvider chains={chains}>
+              <Navbar />
+              {children}
+            </RainbowKitProvider>
+          </WagmiConfig>
+        </div>
         <Footer />
       </body>
     </html>

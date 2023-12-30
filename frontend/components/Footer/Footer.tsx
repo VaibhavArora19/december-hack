@@ -5,8 +5,7 @@ const Footer = () => {
   return (
     <footer
       className="bg-white/7 text-white py-6 px-8"
-      style={{ marginTop: "5.5rem" }}
-    >
+      style={{ marginTop: "5.5rem" }}>
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <p className="text-sm">&copy; All Rights Reserved.</p>
@@ -15,8 +14,7 @@ const Footer = () => {
           <a
             href="https://twitter.com"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             <FaTwitter
               className="text-white hover:text-blue-400 transition ml-4"
               size={24}
@@ -25,8 +23,7 @@ const Footer = () => {
           <a
             href="https://discord.com"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             <FaDiscord
               className="text-white hover:text-purple-400 transition ml-4"
               size={24}
@@ -35,8 +32,7 @@ const Footer = () => {
           <a
             href="https://github.com"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             <FaGithub
               className="text-white hover:text-gray-400 transition ml-4"
               size={24}
