@@ -207,7 +207,11 @@ const PoolDetails = () => {
           )}
           <div className="flex justify-center mt-10">
             {flowData && flowData.flowRate != 0 && (
-              <AmountStreamed amountDeposited={amountDeposited} />
+              <AmountStreamed
+                sender={address}
+                receiver={smartContractAddress}
+                currentVault={currentVault}
+              />
             )}
           </div>
           <div className="mt-[5%]">
