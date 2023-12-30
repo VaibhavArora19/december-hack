@@ -32,11 +32,16 @@ export const keyValuePair = [
 const PoolTogetherInfo = (props: {
   vault: (typeof Vaults)[number];
   flowData: any;
+  otherInfo: any;
 }) => {
   const formattedVaultInfo = [
     {
       token: "Your balance",
-      value: "120012", //!the amount user deposited in pool together edit later
+      value:
+        props.otherInfo && props.otherInfo.balance
+          ? ethers.utils.formatEther(props.otherInfo.balance).substring(0, 8) +
+            " DAI"
+          : "0", //!the amount user deposited in pool together edit later
     },
     {
       token: "Pool Address",
@@ -52,7 +57,7 @@ const PoolTogetherInfo = (props: {
     },
     {
       token: "TVL",
-      value: "100 DAI", //!need to edit this as well
+      value: "23.13 DAI", //!need to edit this as well
     },
     {
       token: "Super Token",

@@ -1,5 +1,5 @@
 export const smartContractAddress =
-  "0x1894c592d195f303829470Bb8D95A4054e977528";
+  "0x72A3111fd452323Cf3c78710eb72747A4B2c2B08";
 
 export const ERC20ABI = [
   {
@@ -789,6 +789,25 @@ export const VAULT_ABI = [
     inputs: [],
     name: "asset",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_owner",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        name: "balance",
+        type: "uint256",
+      },
+    ],
+    payable: false,
     stateMutability: "view",
     type: "function",
   },

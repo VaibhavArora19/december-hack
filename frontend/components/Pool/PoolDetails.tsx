@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import {
   ERC20ABI,
   SMART_CONTRACT_ABI,
+  VAULT_ABI,
   Vaults,
   smartContractAddress,
 } from "@/constants";
@@ -23,6 +24,7 @@ const PoolDetails = () => {
   const [amountDeposited, setAmountDeposited] =
     useState<any>("0.0000000000000000");
   const [flowData, setFlowData] = useState<any>(null);
+  const [otherInfo, setOtherInfo] = useState<any>(null);
 
   const pathname = usePathname();
 
@@ -52,6 +54,7 @@ const PoolDetails = () => {
     );
 
     await checkStream();
+    otherDetails();
     console.log("aa", allowanceByUser.toString());
     setAllowance(allowanceByUser.toString());
   };
@@ -159,6 +162,26 @@ const PoolDetails = () => {
     }
   };
 
+  async function otherDetails() {
+    //@ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    const contract = new ethers.Contract(
+      currentVault.address,
+      VAULT_ABI,
+      provider
+    );
+
+    const balance = await contract.balanceOf(address);
+
+    setOtherInfo((prevState: any) => {
+      return {
+        ...prevState,
+        balance,
+      };
+    });
+  }
+
   useEffect(() => {
     if (address) {
       getAllInfo();
@@ -190,7 +213,11 @@ const PoolDetails = () => {
       </div>
       <div>
         {flowData && (
-          <PoolTogetherInfo vault={currentVault} flowData={flowData} />
+          <PoolTogetherInfo
+            vault={currentVault}
+            flowData={flowData}
+            otherInfo={otherInfo}
+          />
         )}
       </div>
       <div>
@@ -210,10 +237,14 @@ const PoolDetails = () => {
           </button>
         ) : flowData && flowData.flowRate != 0 ? (
           <button
-            className="ml-[30%] mt-20 btn btn-primary w-[600px] text-lg"
+            className={`ml-[30%] mt-20 btn btn-primary w-[600px] text-lg`}
             onClick={cancelStreamHandler}
           >
-            Cancel Stream
+            <span
+              className={`${loading && "loading loading-spinner"} text-center`}
+            >
+              Cancel Stream
+            </span>
           </button>
         ) : (
           <StreamButton vault={currentVault} />

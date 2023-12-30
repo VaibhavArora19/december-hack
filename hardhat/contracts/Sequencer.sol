@@ -8,6 +8,13 @@ import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/inte
 import {SuperTokenV1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+interface IVault {
+    function deposit(
+        uint256 _assets,
+        address _receiver
+    ) external returns (uint256);
+}
+
 // Superfluid widget doesn't work with the super tokens that are not listed
 // so we take a stream of super token convert them to their underlying address
 // lock that token in our smart contract
@@ -145,19 +152,19 @@ contract Sequencer is Ownable {
                 depositByDepositor[deposits[i].depositor][i]
                     .tokensInvestedAt = block.timestamp;
 
-                IERC20(deposits[i].underlyingTokenAddress).transfer(
-                    deposits[i].depositor,
-                    tokenToDowngrade
-                );
+                uint256 _allowance = IERC20(deposits[i].underlyingTokenAddress)
+                    .allowance(address(this), deposits[i].poolAddress);
 
-                (bool success, bytes memory data) = deposits[i]
-                    .poolAddress
-                    .call{value: 0}(
-                    abi.encodeWithSignature(
-                        "deposit(uint256, address)",
-                        tokenToDowngrade,
-                        deposits[i].depositor
-                    )
+                if (_allowance < tokenToDowngrade) {
+                    IERC20(deposits[i].underlyingTokenAddress).approve(
+                        deposits[i].poolAddress,
+                        100000000000000000000000
+                    );
+                }
+
+                IVault(deposits[i].poolAddress).deposit(
+                    tokenToDowngrade,
+                    deposits[i].depositor
                 );
             }
         }
