@@ -45,7 +45,7 @@ const PoolTogetherInfo = (props: {
     },
     {
       token: "Pool Address",
-      value: props.vault.address, //!check if we can get the value of this from somewhere
+      value: props.vault.address,
     },
     {
       token: "Deposit Token",
@@ -53,11 +53,11 @@ const PoolTogetherInfo = (props: {
     },
     {
       token: "Flow Rate",
-      value: ethers.utils.formatEther(props.flowData?.flowRate) + " fDAIx/sec", //!need to send with the token name
+      value: ethers.utils.formatEther(props.flowData?.flowRate) + " fDAIx/sec",
     },
     {
       token: "TVL",
-      value: "23.13 DAI", //!need to edit this as well
+      value: "23.13 DAI",
     },
     {
       token: "Super Token",

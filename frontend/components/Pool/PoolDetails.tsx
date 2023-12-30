@@ -25,6 +25,7 @@ const PoolDetails = () => {
     useState<any>("0.0000000000000000");
   const [flowData, setFlowData] = useState<any>(null);
   const [otherInfo, setOtherInfo] = useState<any>(null);
+  const [bigLoading, setBigLoading] = useState<any>(false);
 
   const pathname = usePathname();
 
@@ -184,73 +185,84 @@ const PoolDetails = () => {
 
   useEffect(() => {
     if (address) {
-      getAllInfo();
+      setBigLoading(true);
+      getAllInfo().then(() => {
+        setBigLoading(false);
+      });
     }
   }, [address]);
 
   return (
-    <div>
-      {flowData && flowData.flowRate == 0 && (
-        <div className="flex justify-center mt-20">
-          <h1 className="text-7xl font-medium text-orange-500">
-            No Active Stream Found
-          </h1>
+    <>
+      {bigLoading ? (
+        <h1 className="text-center text-4xl font-medium mt-40">Loading...</h1>
+      ) : (
+        <div>
+          {flowData && flowData.flowRate == 0 && (
+            <div className="flex justify-center mt-20">
+              <h1 className="text-6xl font-medium text-orange-500">
+                No Active Stream Found
+              </h1>
+            </div>
+          )}
+          <div className="flex justify-center mt-10">
+            {flowData && flowData.flowRate != 0 && (
+              <AmountStreamed amountDeposited={amountDeposited} />
+            )}
+          </div>
+          <div className="mt-[5%]">
+            {address && flowData && flowData.flowRate != 0 && (
+              <TxDetails
+                sender={address}
+                receiver={currentVault.address}
+                logo={currentVault.logoURI}
+              />
+            )}
+          </div>
+          <div>
+            {flowData && (
+              <PoolTogetherInfo
+                vault={currentVault}
+                flowData={flowData}
+                otherInfo={otherInfo}
+              />
+            )}
+          </div>
+          <div>
+            {allowance === null || allowance == "0" ? (
+              <button
+                className={`ml-[33%] mt-20 btn btn-primary w-[500px]`}
+                onClick={giveAllowanceHandler}
+              >
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner"></span>
+                    <h1>Approving</h1>
+                  </>
+                ) : (
+                  <span>Approve Vault</span>
+                )}
+              </button>
+            ) : flowData && flowData.flowRate != 0 ? (
+              <button
+                className={`ml-[34%] mt-20 btn btn-primary w-[500px] text-lg`}
+                onClick={cancelStreamHandler}
+              >
+                <span
+                  className={`${
+                    loading && "loading loading-spinner"
+                  } text-center`}
+                >
+                  Cancel Stream
+                </span>
+              </button>
+            ) : (
+              <StreamButton vault={currentVault} />
+            )}
+          </div>
         </div>
       )}
-      <div className="flex justify-center mt-10">
-        {flowData && flowData.flowRate != 0 && (
-          <AmountStreamed amountDeposited={amountDeposited} />
-        )}
-      </div>
-      <div className="mt-[5%]">
-        {address && flowData && flowData.flowRate != 0 && (
-          <TxDetails
-            sender={address}
-            receiver={currentVault.address}
-            logo={currentVault.logoURI}
-          />
-        )}
-      </div>
-      <div>
-        {flowData && (
-          <PoolTogetherInfo
-            vault={currentVault}
-            flowData={flowData}
-            otherInfo={otherInfo}
-          />
-        )}
-      </div>
-      <div>
-        {allowance === null || allowance == "0" ? (
-          <button
-            className={`ml-[30%] mt-20 btn btn-primary w-[600px]`}
-            onClick={giveAllowanceHandler}
-          >
-            {loading ? (
-              <>
-                <span className="loading loading-spinner"></span>
-                <h1>Approving</h1>
-              </>
-            ) : (
-              <span>Approve Vault</span>
-            )}
-          </button>
-        ) : flowData && flowData.flowRate != 0 ? (
-          <button
-            className={`ml-[30%] mt-20 btn btn-primary w-[600px] text-lg`}
-            onClick={cancelStreamHandler}
-          >
-            <span
-              className={`${loading && "loading loading-spinner"} text-center`}
-            >
-              Cancel Stream
-            </span>
-          </button>
-        ) : (
-          <StreamButton vault={currentVault} />
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -79,7 +79,7 @@ const StreamButton = (props: { vault: (typeof Vaults)[number] }) => {
               >
                 {({ openModal }) => (
                   <button
-                    className="ml-[30%] mt-20 btn btn-primary w-[600px] text-[16px]"
+                    className="ml-[33%] mt-20 btn btn-primary w-[500px] text-[16px]"
                     onClick={(e) => {
                       openModal();
                     }}
