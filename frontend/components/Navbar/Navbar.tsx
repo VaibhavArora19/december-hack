@@ -8,7 +8,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <div className="relative">
+    <div className="relative border-gray-900 border-b-2">
       <div className="absolute inset-0 bg-[#0c0c0c] backdrop-blur-md"></div>
       <div className="flex justify-between px-8 py-4 w-full relative z-10 ">
         <div className="flex gap-4">
@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="flex justify-around gap-6">
           <div className="flex justify-around gap-6 mt-4">
             <h3
-              className="cursor-pointer text-[1.15rem] font-medium  transition duration-300 hover:text-white  relative "
+              className="cursor-pointer text-[1.15rem] font-semibold  transition duration-300 hover:text-white  relative "
               onClick={() => {
                 router.push("/deposit");
               }}
@@ -42,7 +42,7 @@ const Navbar = () => {
               Deposit
             </h3>
             <h3
-              className="cursor-pointer text-[1.15rem] font-medium  transition duration-300 hover:text-white  relative"
+              className="cursor-pointer text-[1.15rem] font-semibold  transition duration-300 hover:text-white  relative"
               onClick={() => {
                 router.push("/pools");
               }}
@@ -50,7 +50,7 @@ const Navbar = () => {
               Pools
             </h3>
             <h3
-              className="cursor-pointer text-[1.15rem] font-medium  transition duration-300 hover:text-white  relative"
+              className="cursor-pointer text-[1.15rem] font-semibold  transition duration-300 hover:text-white  relative"
               onClick={() => {
                 router.push("/activity");
               }}

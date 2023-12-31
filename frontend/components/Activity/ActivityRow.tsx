@@ -48,8 +48,8 @@ const ActivityRow = (props: any) => {
       <td>
         <div className="flex items-center gap-3">
           <div className="avatar">
-            <div className="mask mask-squircle w-12 h-12">
-              <img src="/DAI-OP.jpg" alt="Avatar Tailwind CSS Component" />
+            <div className="w-12 h-12 rounded-md">
+              <img src="/img2.png" alt="Avatar Tailwind CSS Component" />
             </div>
           </div>
           <div>
