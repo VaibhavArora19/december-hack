@@ -6,7 +6,7 @@ export const streamSendQuery = gql`
       where: {
         and: [
           { sender: $sender }
-          { receiver: "0x738960bF1C2E54E8d3d9A54537e857E04d1f84b4" }
+          { receiver: "0x72A3111fd452323Cf3c78710eb72747A4B2c2B08" }
         ]
       }
     ) {

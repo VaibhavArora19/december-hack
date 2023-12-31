@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { createClient, cacheExchange, fetchExchange } from "urql";
 import { streamSendQuery } from "@/queries";
 import { useAccount } from "wagmi";
-import { SMART_CONTRACT_ABI, smartContractAddress } from "@/constants";
+import {
+  ACTIVITIES,
+  SMART_CONTRACT_ABI,
+  smartContractAddress,
+} from "@/constants";
 import { ethers } from "ethers";
 
 const Activity = () => {
@@ -27,13 +31,13 @@ const Activity = () => {
     setStreamInfo(data.data.streams);
   }
 
-  useEffect(() => {
-    if (address) {
-      getData();
-    }
-  }, [address]);
+  // useEffect(() => {
+  //   if (address) {
+  //     getData();
+  //   }
+  // }, [address]);
 
-  return <>{streamInfo && <ActivityTable streamInfo={streamInfo} />}</>;
+  return <>{<ActivityTable streamInfo={ACTIVITIES} />}</>;
 };
 
 export default Activity;

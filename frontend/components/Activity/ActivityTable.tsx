@@ -1,7 +1,6 @@
 import ActivityRow from "./ActivityRow";
 
 const ActivityTable = (props: any) => {
-  console.log("gg", props);
   return (
     <div className="overflow-x-auto mt-14">
       <table className="table">

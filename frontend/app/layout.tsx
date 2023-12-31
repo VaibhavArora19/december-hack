@@ -1,6 +1,12 @@
 "use client";
 import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
@@ -36,7 +42,7 @@ const wagmiConfig = createConfig({
 export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className={`flex flex-col min-h-screen ${poppins.className}`}>
         <div className="flex-grow">
           <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider chains={chains}>

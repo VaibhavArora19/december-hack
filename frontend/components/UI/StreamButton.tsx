@@ -8,7 +8,12 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useCallback, useState } from "react";
 import { EventListeners } from "@superfluid-finance/widget";
 import { PaymentOption } from "@superfluid-finance/widget";
-import { SMART_CONTRACT_ABI, Vaults, smartContractAddress } from "@/constants";
+import {
+  ACTIVITIES,
+  SMART_CONTRACT_ABI,
+  Vaults,
+  smartContractAddress,
+} from "@/constants";
 import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 
@@ -72,6 +77,14 @@ const StreamButton = (props: { vault: (typeof Vaults)[number] }) => {
                     );
 
                     await tx.wait();
+
+                    ACTIVITIES.push({
+                      //@ts-ignore
+                      sender: address,
+                      poolAddress: props.vault.address,
+                      flowRate: "100 fDAIx/mo",
+                      CreatedAt: new Date().toDateString(),
+                    });
 
                     console.log("done txing");
                   },

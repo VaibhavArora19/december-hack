@@ -3,17 +3,17 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10 mt-20">
-      <section>
+      <section className="flex justify-between flex-col">
         <div className="form-wrapper">
           <Image
             src="/bg-form.svg"
             alt=""
             width={600}
             height={600}
-            style={{ marginLeft: "85px" }}
+            style={{ marginLeft: "125px" }}
           />
         </div>
-        <h1 className="text-8xl px-2 mt-4 font-bold font-sans ">
+        <h1 className="text-8xl mt-4 font-bold font-sans ">
           Safe and Efficient <br />
           cross-chain router
         </h1>

@@ -33,11 +33,11 @@ const ActivityRow = (props: any) => {
     setPoolDetails(poolInfo);
   };
 
-  useEffect(() => {
-    if (address) {
-      getPoolInfo();
-    }
-  }, [address]);
+  // useEffect(() => {
+  //   if (address) {
+  //     getPoolInfo();
+  //   }
+  // }, [address]);
   return (
     <tr>
       <th>
@@ -54,30 +54,22 @@ const ActivityRow = (props: any) => {
           </div>
           <div>
             <div className="font-bold">
-              {props.stream.sender.id.substring(0, 5) +
+              {props.stream.sender.substring(0, 5) +
                 "..." +
-                props.stream.sender.id.substring(38, 43)}
+                props.stream.sender.substring(38, 43)}
             </div>
           </div>
         </div>
       </td>
       <td>
-        {poolDetails &&
-          poolDetails.poolAddress.substring(0, 7) +
-            "..." +
-            poolDetails.poolAddress.slice(-7)}
+        {props.stream.poolAddress.substring(0, 10) +
+          "..." +
+          props.stream.poolAddress.substring(32, 43)}
       </td>
-      <td>
-        {ethers.utils.formatEther(
-          props.stream.currentFlowRate.substring(0, 8)
-        ) +
-          " " +
-          props.stream.token.symbol +
-          "/sec"}
-      </td>
+      <td>{props.stream.flowRate}</td>
       <th>
         <button className="btn btn-ghost btn-xs">
-          {new Date(props.stream.createdAtTimestamp * 1000).toUTCString()}
+          {props.stream.CreatedAt}
         </button>
       </th>
     </tr>

@@ -40,9 +40,12 @@ const AmountStreamed = (props: {
 
     const d = new Date(res.timestamp).getTime();
 
-    let start: any = (new Date().getTime() - d) * +res.flowRate;
+    let start: any = ((new Date().getTime() - d) * +res.flowRate) / 1000;
 
-    start = start.toString().substring(0, 17);
+    console.log("aa", start);
+    start = ethers.utils.formatEther(start.toString().substring(0, 17));
+
+    console.log("ss", start);
 
     const flowRate = ethers.utils.formatEther(res.flowRate);
 

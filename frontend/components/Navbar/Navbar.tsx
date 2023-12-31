@@ -2,6 +2,7 @@
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const router = useRouter();
@@ -10,15 +11,25 @@ const Navbar = () => {
     <div className="relative">
       <div className="absolute inset-0 bg-[#0c0c0c] backdrop-blur-md"></div>
       <div className="flex justify-between px-8 py-4 w-full relative z-10 ">
-        <div>
-          <h1
-            className="cursor-pointer text-[2rem] font-medium"
+        <div className="flex gap-4">
+          <div
+            className="pt-[4px] cursor-pointer"
             onClick={() => {
               router.push("/");
             }}
           >
-            SF.
-          </h1>
+            <Image src={"/logo.png"} alt="logo" width={60} height={60} />
+          </div>
+          {/* <div>
+            <h1
+              className="cursor-pointer text-[1.5rem] font-bold italic"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              EAGLE <br /> Finance
+            </h1>
+          </div> */}
         </div>
         <div className="flex justify-around gap-6">
           <div className="flex justify-around gap-6 mt-4">
