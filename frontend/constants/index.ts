@@ -816,12 +816,6 @@ export const VAULT_ABI = [
 export const ACTIVITIES = [
   {
     sender: "0x394B4d8d8Bf066dFbD2aBD6a705e646C29e80746",
-    flowRate: "100 fDAIx/mo",
-    poolAddress: "0x9e025155f7BD3b17E26bCE811F7B6F075973570A",
-    CreatedAt: "Fri Dec 29 2023",
-  },
-  {
-    sender: "0x394B4d8d8Bf066dFbD2aBD6a705e646C29e80746",
     flowRate: "100 USDCx/mo",
     poolAddress: "0xB7930c829cc1de1b37a3Bb9b477E33251DA15a50",
     CreatedAt: "Fri Dec 29 2023",
@@ -831,5 +825,11 @@ export const ACTIVITIES = [
     flowRate: "100 fDAIx/mo",
     poolAddress: "0xbC6d40984ddB1482BBBF1433c1C1f0380f74caCD",
     CreatedAt: "Sat Dec 30 2023",
+  },
+  {
+    sender: "0x394B4d8d8Bf066dFbD2aBD6a705e646C29e80746",
+    flowRate: "100 fDAIx/mo",
+    poolAddress: "0x9e025155f7BD3b17E26bCE811F7B6F075973570A",
+    CreatedAt: "Fri Dec 31 2023",
   },
 ];

@@ -15,6 +15,8 @@ import { ethers } from "ethers";
 const Activity = () => {
   const { address } = useAccount();
   const [streamInfo, setStreamInfo] = useState();
+  const [show, setShow] = useState(false);
+
   async function getData() {
     const client = createClient({
       url: "https://optimism-goerli.subgraph.x.superfluid.dev",
@@ -31,13 +33,13 @@ const Activity = () => {
     setStreamInfo(data.data.streams);
   }
 
-  // useEffect(() => {
-  //   if (address) {
-  //     getData();
-  //   }
-  // }, [address]);
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 1500);
+  }, []);
 
-  return <>{<ActivityTable streamInfo={ACTIVITIES} />}</>;
+  return <>{show && <ActivityTable streamInfo={ACTIVITIES} />}</>;
 };
 
 export default Activity;
