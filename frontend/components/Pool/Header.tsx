@@ -7,15 +7,14 @@ const Header = () => {
         <div className="w-[30%]">
           <h1 className="text-[40px] font-bold mb-4">Explore our Pools</h1>
           <h3 className="text-gray-500">
-            The protocol provides aggregation information services on exchange
-            protocols and networks. The core part of the protocol is the 1inch
-            v5 smart contract, which performs runtime verification of
-            transaction execution. <br /> <br />
-            As a result, user funds cant be lost even in case of interaction
-            with an unsafe liquidity source. Since the smart contract ensures
-            security, the protocol can be used in various aggregation
-            information services, such as Pathfinder, developed and run by the
-            1inch Labs.
+            The protocol provides safe information services on exchange
+            protocols and networks. The core part of the protocol is the pool
+            together smart contract, which performs the deposit into the defi
+            vaults. <br /> <br />
+            As a result, user can deposit the stable tokens into the protocol
+            while user themselves shares the super token streaming. Since the
+            smart contract ensures security, the protocol can be used in various
+            aggregation information services.
           </h3>
         </div>
         <div className="pt-16">
